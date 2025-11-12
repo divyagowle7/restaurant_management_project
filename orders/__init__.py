@@ -1,6 +1,6 @@
 PENDING='Pending'
 PROCESSING='Processing'
-COMPLETED='Complted'
+COMPLETED='Completed'
 CANCELLED='Cancelled'
 
 OrderStatus.objects.get_or_create(name=PENDING)

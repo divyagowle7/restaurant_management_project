@@ -4,7 +4,7 @@ from rest_framework import status
 from rest_framework.views import APIView
 from .models import Coupon
 from datetime import date
-
+from .utils import generate_coupon_code
 # Create your views here.
 class CouponValidationView(APIView):
     def post(self,request):
@@ -26,4 +26,6 @@ class CouponValidationView(APIView):
                 'success':False
                 'error':'Invalid coupon code'
             },status=status.HTTP_400_BAD_REQUEST)
+coupon_code=generate_coupon_code(8)
+print(coupon_code)
             

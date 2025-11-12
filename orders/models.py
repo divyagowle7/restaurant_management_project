@@ -13,6 +13,7 @@ class Coupon(models.Model):
 
 class OrderStatus(models.Model):
     name=models.CharField(max_length=50,unique=True)
+    status=models.ForiegnKey(OrderStatus,on_delete=models.SET_NULL,null=True)
 
     def __str__(self):
         return self.name

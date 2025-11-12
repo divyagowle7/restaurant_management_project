@@ -2,5 +2,5 @@ from django.urls import path
 from .views import MenuCategoryList
 
 urlpatterns = [
-    path('menu-categories/',MenuCategoryList.as_view(),name='menu-category-list'),
+    path('appi/menu-categories-list/',MenuCategoryList.as_view()),
 ]

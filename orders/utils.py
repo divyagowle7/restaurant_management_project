@@ -3,15 +3,16 @@ import string
 import datetime
 from .models import Coupon # Assuming you have a coupon
 from DailyOperatingHours import DailyOperatingHours
+import django.db.models import Model
 
-def generate_coupon_code(length=10):
+def generate_coupon_code(length=10,model=None,field='code'):
     """Generate a unique alphanumeric coupon code."""
     if not isinstance(length,int)or length<=0:
         return ValueError("Length must be a positive integer")
     characters=string.ascii_uppercase+string.ascii_lowercase+string.digits
     while True:
         code=''.join(secrets.choice(characters) for _ in range(length))
-        if not Coupon.objects.filter(code=code).exists():
+        if model is None or not model.objects.filter(**{field: code}).exists():
             return code
 
 def get_today_operating_hours():

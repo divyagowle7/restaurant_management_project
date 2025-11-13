@@ -3,7 +3,7 @@ import string
 import datetime
 from .models import Coupon # Assuming you have a coupon
 from DailyOperatingHours import DailyOperatingHours
-import django.db.models import Model
+from django.db.models import Model
 
 def generate_coupon_code(length=10,model=None,field='code'):
     """Generate a unique alphanumeric coupon code."""

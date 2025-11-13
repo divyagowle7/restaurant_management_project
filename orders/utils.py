@@ -5,10 +5,11 @@ from .models import Coupon # Assuming you have a coupon
 from DailyOperatingHours import DailyOperatingHours
 
 def generate_coupon_code(length=10):
-    """
-    Generate a unique alphanumeric coupon code.
-    """
-    characters=string.ascii_letters+string.digits
+    """Generate a unique alphanumeric coupon code."""
+    if not isinstance(length,int)or length<=0:
+        return ValueError("Length must be a positive integer")
+
+    characters=string.ascii_uppercase+string.ascii_lowercase+string.digits
     while True:
         code=''.join(secrets.choice(characters) for _ in range(length))
         if not Coupon.objects.filter(code=code).exists():

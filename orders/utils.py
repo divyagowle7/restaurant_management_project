@@ -1,9 +1,10 @@
 import secrets
 import string
-import datetime
-from .models import Coupon # Assuming you have a coupon
+from datetime import date,time
+from .models import Coupon.Order
 from DailyOperatingHours import DailyOperatingHours
-from django.db.models import Model
+from django.db.models import Model,Sum
+
 
 def generate_coupon_code(length=10,model=None,field='code'):
     """Generate a unique alphanumeric coupon code."""
@@ -27,4 +28,6 @@ def calculate_tip_amount(order_total,tip_percentage):
     tip_amount=order_total*(tip_percentage/100)
     return round(tip_amount,2)
 
-
+def get_daily_sales_total(date):
+    total=Order.objects.filter(created_at_date=date).aggregate(total_sum=Sum('total_price'))['total_sum']or 0
+    return total

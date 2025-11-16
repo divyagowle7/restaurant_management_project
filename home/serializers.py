@@ -10,7 +10,7 @@ class MenuItemSerializer(serializers.ModelSerializer):
     ingredients=IngredientSerializer(many=True,read_only=True)
     class Meta:
         model=MenuItem
-        fields=['id','name','ingredients']
+        fields=['id','name','description','price','is_available']
         
 class MenuCategorySerializer(serializers.ModelSerializer):
     class Meta:

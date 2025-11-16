@@ -8,7 +8,16 @@ class MenuCategory(models.Model):
 
     def __str__(self):
         return self.name
+class MenuItem(models.Model):
+    name=models.CharField(max_length=255)
 
+class Ingredient(models.Model):
+    name=models.CharField(max_length=255)
+
+class MenuItemIngredient(models.Model):
+    menu_item=models.ForeignKey(MenuItem,on_delete=models.CASCADE)
+    ingredient=models.ForeignKey(Ingredient,on_delete=models.CASCADE)
+    
 class DailySpecial(models.Model):
     @staticmethod
     def get_random_special():

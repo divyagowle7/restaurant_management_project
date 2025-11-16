@@ -1,6 +1,7 @@
 from django.db import models
 import random
 from django.core.exceptions import ObjectDoesNotExist
+from datetime import date
 # Create your models here.
 class MenuCategory(models.Model):
     name = models.CharField(max_length=100,unique=True)
@@ -19,6 +20,8 @@ class MenuItemIngredient(models.Model):
     ingredient=models.ForeignKey(Ingredient,on_delete=models.CASCADE)
     
 class DailySpecial(models.Model):
+    date=models.DateField()
+    objects=DailySpecialManager()
     @staticmethod
     def get_random_special():
         try:
@@ -29,3 +32,6 @@ class DailySpecial(models.Model):
             return DailySpecial.objects.all()[random_index]
         except Exception as e:
             raise Exception(f"Error fetching random daily special: {str(e)}")     
+class DailySpecialManager(models.Manager):
+    def upcoming(self):
+        return self.filter(date__gte=date.today())

@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from rest_framework import generics,viewsets
-from .models import MenuCategory
-from .serializers import MenuCategorySerializer
+from .models import MenuCategory,MenuItem
+from .serializers import MenuCategorySerializer,MenuItemSerializer
 from rest_framework.pagination import PageNumberPagination
 from django.db.models import Q
 # Create your views here.
@@ -12,7 +12,11 @@ class MenuItemPagination(PageNumberPagination):
 class MenuCategoryList(generics.ListAPIView):
     queryset=MenuCategory.objects.filter(is_featured=True)
     serializer_class=MenuCategorySerializer
-
+class MenuItemIngredientsView(generics.RetrieveAPIView):
+    queryset=MenuItem.objects.all()
+    serializer_class=MenuItemSerializer
+    lookup_field='pk'
+    
 class MenuItemVieewSet(viewsets.ModelViewSet):
     queryset=MenuCategory.objects.all()
     serializer_class=MenuCategorySerializer

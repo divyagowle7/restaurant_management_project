@@ -11,6 +11,9 @@ class MenuCategory(models.Model):
         return self.name
 class MenuItem(models.Model):
     name=models.CharField(max_length=255)
+    description=models.TextField()
+    price=models.DecimalField(max_digits=10,decimal-places=2)
+    is_available=models.BooleanField(default=True)
 
 class Ingredient(models.Model):
     name=models.CharField(max_length=255)

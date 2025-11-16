@@ -4,7 +4,11 @@ from datetime import date,time
 from .models import Coupon,Order
 from DailyOperatingHours import DailyOperatingHours
 from django.db.models import Model,Sum
+import re
 
+def validate_phone_number(phone_number):
+    pattern = re.compile(r'^(\+\d{1,3}[-\s.]?(\(\d{3}\)|\d{3})[-\s.]?\d{3}[-\s.]?\d{4}$')
+    return bool(pattern.match(phone_number))
 
 def generate_coupon_code(length=10,model=None,field='code'):
     """Generate a unique alphanumeric coupon code."""

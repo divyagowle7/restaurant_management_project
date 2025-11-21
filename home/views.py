@@ -50,3 +50,14 @@ class TableDetailView(generics.RetrieveAPIView):
     serializer_class=TableSerializer
     lookup_field='pk'
            
+class MenuItemByCategoryView(generics.ListAPIView):
+    serializer_class=MenuItemSerializer
+
+    def get_queryset(self):
+        category=self.request.query_params.get('category',None)
+        if category is not None:
+            queryset=MenuItem.objects.filter(category_category_name=category)
+        else:
+            queryset=MenuItem.objects.none()
+        return queryset
+        

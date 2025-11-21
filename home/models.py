@@ -14,6 +14,7 @@ class MenuItem(models.Model):
     description=models.TextField()
     price=models.DecimalField(max_digits=10,decimal-places=2)
     is_available=models.BooleanField(default=True)
+    objects=MenuItemManager()
 
 class Ingredient(models.Model):
     name=models.CharField(max_length=255)
@@ -38,3 +39,8 @@ class DailySpecial(models.Model):
 class DailySpecialManager(models.Manager):
     def upcoming(self):
         return self.filter(date__gte=date.today())
+class MenuItemManager(models.Model):
+    def get_top_selling_items(self,num_items=5):
+        return self.annotate(
+            order_count=models.Count('orderitem')
+        ).order_by('-order_count')[:num_items]

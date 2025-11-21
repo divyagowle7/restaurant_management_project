@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from rest_framework import generics,viewsets,status
-from .models import MenuCategory,MenuItem
-from .serializers import MenuCategorySerializer,MenuItemSerializer
+from .models import MenuCategory,MenuItem/,Table
+from .serializers import MenuCategorySerializer,MenuItemSerializer,TableSerializer
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.permissions import IsAdminUser
 from rest_framework.response import Response
@@ -44,4 +44,9 @@ class MenuItemVieewSet(viewsets.ModelViewSet):
         if search_query:
             queryset=queryset.filter(name__icontains=search_query)
         return queryset
-        
+
+class TableDetailView(generics.RetrieveAPIView):
+    queryset=Table.objects.all()
+    serializer_class=TableSerializer
+    lookup_field='pk'
+           

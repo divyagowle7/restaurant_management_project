@@ -17,3 +17,11 @@ class OrderStatus(models.Model):
 
     def __str__(self):
         return self.name
+
+class Order(models.Model):
+    STATUS_CHOICES=[
+        ('Pending','Pending'),
+        ('Processed',Processed),
+    ]
+    status=models.CharField(max_length=10,choices=STATUS_CHOICES,default='Pending')
+    

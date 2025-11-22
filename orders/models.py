@@ -24,4 +24,18 @@ class Order(models.Model):
         ('Processed',Processed),
     ]
     status=models.CharField(max_length=10,choices=STATUS_CHOICES,default='Pending')
+    def get_unique_item_names(self):
+        unique_names=set(
+            order_item.menu_item.name
+            for order_item in self.orderitem_set.all()
+        )
+        return list(unique_names)
+
+class OrderItem(models.Model):
+    order=models.ForiegnKey(Order,on_delete=models.CASCADE)
+    menu_item=models.ForiegnKey('MenuItem',on_delete=models.CASCADE)
+
+class MenuItem(models.Model):
+    name=models.CharField(mal=255)
+    
     

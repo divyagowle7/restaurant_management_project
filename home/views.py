@@ -52,7 +52,6 @@ class TableDetailView(generics.RetrieveAPIView):
            
 class MenuItemByCategoryView(generics.ListAPIView):
     serializer_class=MenuItemSerializer
-
     def get_queryset(self):
         category=self.request.query_params.get('category',None)
         if category is not None:
@@ -61,3 +60,4 @@ class MenuItemByCategoryView(generics.ListAPIView):
             queryset=MenuItem.objects.none()
         return queryset
         
+

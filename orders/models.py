@@ -1,5 +1,6 @@
 from django.db import models
-
+from accounts.models import Customer
+from home.models import Item
 # Create your models here.
 class Coupon(models.Model):
     code=models.CharField(max_length=50,unique=True)
@@ -19,6 +20,10 @@ class OrderStatus(models.Model):
         return self.name
 
 class Order(models.Model):
+    order_id=models.AutoField(primary_key=True)
+    customer=models.ForiegnKey(Customer,on_delete=models.CASCADE)
+    order_items=models.ManyToManyField(Item)
+    total_price=models.DecimalField(max_digits=10,decimal_places=2)
     STATUS_CHOICES=[
         ('Pending','Pending'),
         ('Processed',Processed),

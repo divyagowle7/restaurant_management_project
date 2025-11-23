@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from rest_framework import generics,viewsets,status
-from .models import MenuCategory,MenuItem/,Table
+from .models import MenuCategory,MenuItem,Table
 from .serializers import MenuCategorySerializer,MenuItemSerializer,TableSerializer
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.permissions import IsAdminUser
@@ -59,5 +59,7 @@ class MenuItemByCategoryView(generics.ListAPIView):
         else:
             queryset=MenuItem.objects.none()
         return queryset
-        
+class AvailableTablesAPIView(generics,ListAPIView):
+    queryset=Table.objects.filter(is_available=True)
+    serializer_class=TableSerializer       
 

@@ -1,5 +1,7 @@
 from rest_framework import serializers
 from .models import Order,OrderItem
+from account.serializers import CustomerSerializer
+from home.serializers import ItemSerializer
 
 class OrderItemSerializer(serializers.ModelSerializer):
     class Meta:
@@ -8,6 +10,10 @@ class OrderItemSerializer(serializers.ModelSerializer):
 
 class OrderSerializer(serializers.ModelSerializer):
     items=OrderItemSerializer(many=True,read_only=True)
+    customer=CustomerSerializer(read_only=True)
+    order_items=ItemSerializer(many=True,read_only=True)
+
     class Meta:
         model=Order
-        fields=['order_id','date','total_price','items']
+        fields=['order_id','date','total_price','items','customer','order_items']
+        

@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from rest_framework.response import Response
 from rest_framework import status,generics
+from rest_framework.generics import RetrieveAPIView
 from rest_framework.views import APIView
 from .models import Coupon,Order
 from datetime import date
@@ -38,3 +39,8 @@ class OrderHistoryView(generics.ListAPIView):
 
     def get_queryset(self):
         return Order.objects.filter(user=self.request.user)
+
+class OrderRetrieveView(RetrieveAPIView):
+    queryset=Order.objects.all()
+    serializer_class=OrderSeializer
+    lookkup_field='order_id'

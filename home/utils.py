@@ -1,4 +1,6 @@
 from datetime import datetime
+from django.core.mail import send_mail
+from django.conf import settings
 
 def is_restaurant_open():
     # Define opening hours (Monday=0,Sunday=6)
@@ -17,4 +19,11 @@ def is_restaurant_open():
 
     open_hour,close_hour = opening_hours[current_day]
     return open_hour <= current_hour < close_hour
-    
+def send_order_confirmation_email(order_id,customer_email,**kwargs):
+    try:
+        subject=f"Order confirmation:{order_id}"
+        message=f"Dear customer,your order {order_id} has been confirmed 
+        send_mail(subject,message,settings.DEFAILT_FROM_EMAIL,[customer_email],fail_silently=False)
+    except Exception as e:
+        print(f"Error sending email:{e}")
+        return False 

@@ -1,6 +1,6 @@
 from django.db import models
 from accounts.models import Customer
-from home.models import Item
+from home.models import Item,MenuItem
 # Create your models here.
 class Coupon(models.Model):
     code=models.CharField(max_length=50,unique=True)
@@ -36,9 +36,16 @@ class Order(models.Model):
         )
         return list(unique_names)
 
+    def calculate_total(self):
+        return sum(item.get_cost() for item in self.items.all())
+
 class OrderItem(models.Model):
-    order=models.ForiegnKey(Order,on_delete=models.CASCADE)
+    order=models.ForiegnKey(Order,on_delete=models.CASCADE/,related_name='items')
     menu_item=models.ForiegnKey('MenuItem',on_delete=models.CASCADE)
+    quantity=models.IntegerField()
+
+    def get_cost(self):
+        return self.menu_item.price*self.quantity
 
 class MenuItem(models.Model):
     name=models.CharField(mal=255)

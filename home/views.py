@@ -6,7 +6,14 @@ from rest_framework.pagination import PageNumberPagination
 from rest_framework.permissions import IsAdminUser
 from rest_framework.response import Response
 from django.db.models import Q
+from .utils import send_email
 # Create your views here.
+def some_view(request):
+    recipient_email="recipient@example.com"
+    subject="Test Email"
+    message_body="This is a test email"
+    send_email(recipient_email,subject,message_body)
+    
 class MenuItemPagination(PageNumberPagination):
     page_size=10
     page_size_query_param='page_size'

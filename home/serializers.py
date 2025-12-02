@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import MenuCategory,MenuItem,Ingredient,MenuItemIngrediet,Table
+from .models import MenuCategory,MenuItem,Ingredient,MenuItemIngrediet,Table,ContactFormSubmission
 class IngredientSerializer(serializers.ModelSerializer):
     class Meta:
         model=Ingredient
@@ -24,4 +24,8 @@ class TableSerializer(serializers,ModelSerializer):
     class Meta:
         model=Table
         fields=['table_number','capacity','is_availavle']      
-        
+
+class ContactFormSubmissionSerializer(serializers.ModelSerializer):
+    class Meta:
+        model=ContactFormSubmission
+        fields=['name','email','message']    

@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from rest_framework import generics,viewsets,status
-from .models import MenuCategory,MenuItem,Table
-from .serializers import MenuCategorySerializer,MenuItemSerializer,TableSerializer
+from .models import MenuCategory,MenuItem,Table,ContactFormSubmission
+from .serializers import MenuCategorySerializer,MenuItemSerializer,TableSerializer,ContactFormSubmissionSerializer
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.permissions import IsAdminUser
 from rest_framework.response import Response
@@ -70,3 +70,6 @@ class AvailableTablesAPIView(generics,ListAPIView):
     queryset=Table.objects.filter(is_available=True)
     serializer_class=TableSerializer       
 
+class ContactFormSubmissionView(generics.CreateAPIView):
+    queryset=ContactFormSubmission.objects.all()
+    serializer_class=ContactFormSubmissionSerializer

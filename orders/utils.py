@@ -35,3 +35,9 @@ def calculate_tip_amount(order_total,tip_percentage):
 def get_daily_sales_total(date):
     total=Order.objects.filter(created_at_date=date).aggregate(total_sum=Sum('total_price'))['total_sum']or 0
     return total
+
+def generate_unique_id(length=6):
+    while True:
+        id=''.join(secrets.choice(string.ascii_uppercase+strin.digits) for _ in range(length))
+        if not Order.objects.filter(id=id).exists():
+            return id

@@ -45,3 +45,9 @@ class MenuItemManager(models.Model):
         return self.annotate(
             order_count=models.Count('orderitem')
         ).order_by('-order_count')[:num_items]
+
+class ContactFormSubmission(models.Model):
+    name=models.CharField(max_length=255)
+    email=models.EmailField()
+    message=models.TextField()
+    

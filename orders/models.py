@@ -24,10 +24,12 @@ class Order(models.Model):
     customer=models.ForiegnKey(Customer,on_delete=models.CASCADE)
     order_items=models.ManyToManyField(Item)
     total_price=models.DecimalField(max_digits=10,decimal_places=2)
-    STATUS_CHOICES=[
+    status=models.CharField(max_length=20,choices=[
         ('Pending','Pending'),
-        ('Processed',Processed),
-    ]
+        ('Processing','Processing'),
+        ('Completed','Completed'),
+        ('Cancelled','Cancelled'),
+    ], default='Pending')
     status=models.CharField(max_length=10,choices=STATUS_CHOICES,default='Pending')
     def get_unique_item_names(self):
         unique_names=set(

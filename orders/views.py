@@ -3,11 +3,11 @@ from rest_framework.response import Response
 from rest_framework import status,generics
 from rest_framework.generics import RetrieveAPIView
 from rest_framework.views import APIView
-from .models import Coupon,Order
+from .models import Coupon,Order,PaymentMethod
 from datetime import date
 from .utils import generate_coupon_code
 from rest_framework.permissions import IsAuthenticated
-from .serializers import OrderSeializer
+from .serializers import OrderSeializer,PaymentMethodSerializer
 
 # Create your views here.
 class CouponValidationView(APIView):
@@ -30,8 +30,8 @@ class CouponValidationView(APIView):
                 'success':False
                 'error':'Invalid coupon code'
             },status=status.HTTP_400_BAD_REQUEST)
-coupon_code=generate_coupon_code(8)
-print(coupon_code)
+    coupon_code=generate_coupon_code(8)
+    print(coupon_code)
 
 class OrderHistoryView(generics.ListAPIView):
     serializer_class=OrderSeializer
@@ -60,4 +60,7 @@ class CancelOrderView(generics.UpdateAPIView):
             return Response({'message':'Order cancelled'},status=status.HTTP_200_OK)
         except Order.DoesNotExist:
             return Response({'error':'Order not found'},status=status.HTTP_404_NOT_FOUND)
-            
+class PaymentMethodList(generics.ListAPIView):
+    queryset=PaymentMethod.objects.filter(is_active=True)
+    serializer_class=PaymentMethodSerializer
+                

@@ -16,10 +16,19 @@ class OrderSerializer(serializers.ModelSerializer):
     class Meta:
         model=Order
         fields=['order_id','date','total_price','items','customer','order_items']
-        read_only_fields=['id']
         
 class PaymentMethodSerializer(serializers.ModelSerializer):
     class Meta:
         model=PaymentMethod
         fields='__all__'
-        
+
+class OrderStatusSerializer(serializers.ModelSerializer):
+    class Meta:
+        model=Order
+        fields=['id','status']
+        read_only_fields=['id']   
+
+    def validate_status(self,value):
+        if value not in [choice[0] for choice in Order.STATUS_CHOICES]:
+            raise serializers.ValidationError("Invalid status provided.")
+        return value

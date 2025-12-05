@@ -31,6 +31,7 @@ class Order(models.Model):
         ('Cancelled','Cancelled'),
     ]
     status=models.CharField(max_length=20,choices=STATUS_CHOICES, default='Pending')
+    objects=OrderManager()
     def get_unique_item_names(self):
         unique_names=set(
             order_item.menu_item.name
@@ -59,4 +60,11 @@ class PaymenttMethod(models.Model):
 
     def __str__(self):
         return self.name  
-    
+
+class OrderManager(models.Manager):
+    def get_pending_orders(self):
+        return self.get_order_by_status('pending')
+
+    def get_completed_orders(self):
+        return self.get_order_by_status('completed')
+        

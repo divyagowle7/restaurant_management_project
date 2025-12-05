@@ -7,7 +7,7 @@ from .models import Coupon,Order,PaymentMethod
 from datetime import date
 from .utils import generate_coupon_code
 from rest_framework.permissions import IsAuthenticated
-from .serializers import OrderSeializer,PaymentMethodSerializer
+from .serializers import OrderSeializer,PaymentMethodSerializer,OrderStatusSeializer
 
 # Create your views here.
 class CouponValidationView(APIView):
@@ -64,3 +64,15 @@ class PaymentMethodList(generics.ListAPIView):
     queryset=PaymentMethod.objects.filter(is_active=True)
     serializer_class=PaymentMethodSerializer
                 
+class OrderStatusUpdateView(generics.UpdateAPIView):
+    queryset=Order.objects.all()
+    serializer_class=OrderStatusSeializer
+    lookkup_field='id'
+
+    def update(self,request,*args,**kwargs):
+        instance=self.get_object()
+        serializer=self.get_serailizer(instance,data=request.data,partial=True)
+        serializer.is_valid(raise_exception=True)
+        self.perform_update(serializer)
+        return Response({'message':'Order status updated successfully'},status=status.HTTP_200_OK)
+        

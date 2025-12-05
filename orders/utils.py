@@ -1,6 +1,6 @@
 import secrets
 import string
-from datetime import date,time
+from datetime import date,time,datetime
 from .models import Coupon,Order
 from DailyOperatingHours import DailyOperatingHours
 from django.db.models import Model,Sum
@@ -41,3 +41,10 @@ def generate_unique_id(length=6):
         id=''.join(secrets.choice(string.ascii_uppercase+strin.digits) for _ in range(length))
         if not Order.objects.filter(id=id).exists():
             return id
+
+def format_date_time(date_time:datetime=None)->str:
+    if date_time is None:
+        return ""
+    formatted_date_time=date_time.strftime("%B %d, %Y at %I:%M %p")
+    return formatted_date_time
+    

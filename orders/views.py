@@ -44,3 +44,20 @@ class OrderRetrieveView(RetrieveAPIView):
     queryset=Order.objects.all()
     serializer_class=OrderSeializer
     lookkup_field='order_id'
+
+class CancelOrderView(generics.UpdateAPIView):
+    queryset=Order.objects.all()
+    serializer_class=OrderSeializer
+    lookkup_field='id'
+
+    def update(self,request,*args,**kwargs):
+        try:
+            order=self.get_object()
+            if order.status=='Completed':
+                return Response({'error';'Cannot cancel completed order'},status=status.HTTP_400_BAD_REQUEST)
+            order.status='Cancelled'
+            order.save()
+            return Response({'message':'Order cancelled'},status=status.HTTP_200_OK)
+        except Order.DoesNotExist:
+            return Response({'error':'Order not found'},status=status.HTTP_404_NOT_FOUND)
+            

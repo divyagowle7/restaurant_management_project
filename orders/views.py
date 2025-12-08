@@ -73,6 +73,10 @@ class OrderStatusUpdateView(generics.UpdateAPIView):
         instance=self.get_object()
         serializer=self.get_serailizer(instance,data=request.data,partial=True)
         serializer.is_valid(raise_exception=True)
-        self.perform_update(serializer)
-        return Response({'message':'Order status updated successfully'},status=status.HTTP_200_OK)
+        self.perform_update(serializer)/
+        order=self.get_object()
+        serializer_class=OrderStatusSeializer
+        if new_status not in [choice[0] for choicein Order.STATUS_CHOICES]:
+            return Response({'error':'Invalid status'},status=status.HTTP_400_BAD_REQUEST)
+        return super().update(request,*args,**kwargs)
         

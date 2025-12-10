@@ -16,6 +16,10 @@ def some_view(request):
     subject="Test Email"
     message_body="This is a test email"
     send_email(recipient_email,subject,message_body)
+def daily_specials(request):
+    specials=MenuItem.objects.filter(is_daily_special=True)
+    data=list(specials.values())
+    return JsonResponse(data,safe=False)
     
 class MenuItemPagination(PageNumberPagination):
     page_size=10

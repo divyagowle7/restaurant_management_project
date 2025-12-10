@@ -12,4 +12,5 @@ urlpatterns = [
     path('api/tables/<int:pk>/',TableDetailView.as_view(),name='table-detail'),
     path('api/tables/available/',AvailableTablesAPIView.as_view(),name='available_tables_api'),
     path('url/',ContactFormSubmissionView.as_view(),name='contact_form_submission'),
+    path('api/daily-specials/',views.daily_specials,name='daily_specials')
 ]

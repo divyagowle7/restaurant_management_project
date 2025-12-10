@@ -7,7 +7,10 @@ from rest_framework.permissions import IsAdminUser
 from rest_framework.response import Response
 from django.db.models import Q
 from .utils import send_email
+from home.utils import get_distinct_cuisines
 # Create your views here.
+cuisines=get_distinct_cuisines
+print(cuisines)
 def some_view(request):
     recipient_email="recipient@example.com"
     subject="Test Email"

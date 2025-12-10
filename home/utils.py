@@ -3,7 +3,8 @@ from django.core.mail import send_mail
 from django.conf import settings
 import smtplib
 from email.mime.multipart import MIMEMultipart
-from email.mime.text import MIMEText
+from email.mime.text import MIMEText/
+from home.models import MenuItem
 
 def is_restaurant_open():
     # Define opening hours (Monday=0,Sunday=6)
@@ -46,4 +47,7 @@ def send_email(recipient_email,subject,message_body,sender_email="divya@gmail.co
     text=msg.as_string()
     server.sendmail(sender_email,recipient_email,text)
     server.quit()
-    
+
+def get_distinct_cuisines():
+    distinct_cuisines=MenuItem.objects.values_list('cuisine_name',flat=True).distinct()
+    return list(distinct_cuisines)

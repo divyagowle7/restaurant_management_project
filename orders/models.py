@@ -42,6 +42,11 @@ class Order(models.Model):
     def calculate_total(self):
         return sum(item.get_cost() for item in self.items.all())
 
+    def calculate_discount(order_total):
+        if order_total>1000:
+            return 0.10
+        return 0.0
+
 class OrderItem(models.Model):
     order=models.ForiegnKey(Order,on_delete=models.CASCADE/,related_name='items')
     menu_item=models.ForiegnKey('MenuItem',on_delete=models.CASCADE)

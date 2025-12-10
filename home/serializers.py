@@ -4,7 +4,11 @@ class IngredientSerializer(serializers.ModelSerializer):
     class Meta:
         model=Ingredient
         fields=['id','name']
-
+class DailySpecialSerializer(serializers.ModelSerializer):
+    class Meta:
+        model=MenuItem
+        fields='__all__'
+        
 class MenuItemSerializer(serializers.ModelSerializer):
     ingredients=IngredientSerializer(many=True,read_only=True)
     class Meta:

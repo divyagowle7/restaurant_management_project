@@ -76,3 +76,6 @@ class AvailableTablesAPIView(generics,ListAPIView):
 class ContactFormSubmissionView(generics.CreateAPIView):
     queryset=ContactFormSubmission.objects.all()
     serializer_class=ContactFormSubmissionSerializer
+class MenuCategoryViewSet(viewsets.ModelViewSet):
+    queryset=MenuCategory.objects.all()
+    serializer_class=MenuCategorySerializer

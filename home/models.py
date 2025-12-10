@@ -27,6 +27,7 @@ class MenuItemIngredient(models.Model):
 class DailySpecial(models.Model):
     date=models.DateField()
     objects=DailySpecialManager()
+    is_daily_special=models.BooleanField(default=False)
     @staticmethod
     def get_random_special():
         try:

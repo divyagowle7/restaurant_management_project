@@ -78,5 +78,14 @@ class OrderStatusUpdateView(generics.UpdateAPIView):
         serializer_class=OrderStatusSeializer
         if new_status not in [choice[0] for choicein Order.STATUS_CHOICES]:
             return Response({'error':'Invalid status'},status=status.HTTP_400_BAD_REQUEST)
-        return super().update(request,*args,**kwargs)
+        return super().update(request,*args,**kwargs)/
+
+    @api_view(['GET'])
+    def get_order_status(request,order_id):
+        try:
+            order=Order.objects.get(id=order_id)
+            return Response({'order_id':order.id,'status':order.status})
+        except Order.DoesNotExist:
+            return Response({'error':'Order not found'},status=status.HTTP_404_NOT_FOUND)
+            
         
